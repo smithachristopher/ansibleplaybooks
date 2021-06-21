@@ -1,0 +1,15 @@
+---
+
+- name: Execute a script and start httpd service
+  hosts: localhost
+  remote_user: root
+
+  tasks:
+  - name: Execute a script
+    shell:
+    script: ~/Desktop/Automation/script.sh
+
+  - name: Start httpd service
+    service:
+      name: httpd
+      state: started
