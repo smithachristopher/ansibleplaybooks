@@ -1,0 +1,27 @@
+---
+  - name: check apache update and running
+    hosts: localhost
+    remote_user: root
+    vars:
+      http_port: 80
+      max_clients: 200
+    tasks:
+      - name: Install the latest version of Apache
+        yum:
+          name: httpd
+          state: latest
+
+      - name: check if appache is running the latest version
+        yum:
+          name: httpd
+          state: latest
+
+      - name: ensure apache is running
+        yum:
+          name: httpd
+          state: started
+    handlers:
+      - name: restart apache
+        yum:
+          name: httpd
+          state: restarted
