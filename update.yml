@@ -1,0 +1,19 @@
+---
+# 1. check updates - sudo yum check-update
+# 2. refresh package and install update - sudo yum update
+# 3. reboot system - sudo reboot
+- name: Update all Servers
+  hosts: localhost
+  remote_user: root
+  tasks:
+    - name: update the packages
+      yum:
+        state: latest
+        update_cache: yes  # Force yum to check if cache is out of date and redownload if needed.
+        update_only: yes   # When using latest, only update installed packages.
+        reboot: yes
+      #   when: ansible_os_family == 'centos'
+
+    - name: reboot Systems
+      sysctl:
+        reload: yes # if the sysctl_file is updated then reload

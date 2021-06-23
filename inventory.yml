@@ -1,4 +1,8 @@
-all:
+---
+  all:
   hosts:
     first-test-vm:
-      ansible_host: 192.168.30.170
+    ansible_host: 192.168.30.170
+      # ansible_host: localhost
+    servers:
+       server_node1 ansible_host=localhost ansible_connection=ssh ansible_user=root/administrator/vagrant ansible_password=Cent$Pass
