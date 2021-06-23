@@ -22,50 +22,44 @@
 # 1. check updates - sudo yum check-update
 # 2. refresh package and install update - sudo yum update
 # 3. reboot system - sudo reboot
-    - name: Update all Servers
-      hosts: localhost
-      remote_user: root
-      tasks:
-        - name: update the packages
-          yum:
-            state: latest
-            update_cache: yes  # Force yum to check if cache is out of date and redownload if needed.
-            update_only: yes   # When using latest, only update installed packages.
-            reboot: yes
+
+      - name: update the packages
+        yum:
+          state: latest
+          update_cache: yes  # Force yum to check if cache is out of date and redownload if needed.
+          update_only: yes   # When using latest, only update installed packages.
+          reboot: yes
           #   when: ansible_os_family == 'centos'
 
-        - name: reboot Systems
-          sysctl:
-            reload: yes
+      - name: reboot Systems
+        sysctl:
+          reload: yes
 # Connect to the server via SSH as the root user; or open a terminal if you’re working locally.
 # Install the EPEL repository with the following command: sudo yum install epel-release
 # Confirm your work and refresh the repo list by running: sudo yum repolist
-        - name: install epel-release
-          yum:
-            name: epel-release
-            state: latest
-            when: ansible_facts['os_family'] == 'centos'
+      - name: install epel-release
+        yum:
+          name: epel-release
+          state: latest
+          when: ansible_facts['os_family'] == 'centos'
 
-        - name: refresh the repo list
-          yum:
-            name: repolist
-            state: restarted
+      - name: refresh the repo list
+        yum:
+          name: repolist
+          state: restarted
 # For remote CentOS 8 server login using ssh command.
 # Turn on EPEL repo
 # Execute sudo yum search htop command to search for htop on CentOS
 # Run sudo yum install htop to install htop in CentOS 8
 # Update sudo yum update htop to upgrade htop to the latest version in CentOS 8
-        - name: install htop on centos
-          hosts: first-test-vm
-          remote_user: reboot
-          tasks:
-           - name: install htop on centos
-             yum:
-               name: htop
-               state: installed
-               when: ansible_facts['os_family'] == 'centos'
 
-           - name: enable htop
-             yum:
-               name: htop
-               state: started
+      - name: install htop on centos
+        yum:
+          name: htop
+          state: installed
+          when: ansible_facts['os_family'] == 'centos'
+
+      - name: enable htop
+        yum:
+          name: htop
+          state: started
