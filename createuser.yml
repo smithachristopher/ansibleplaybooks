@@ -1,0 +1,12 @@
+---
+- name: Create New Users
+  hosts: first-test-vm
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Create Users
+      user:
+        name: "Ann"
+        password: "{{ my_password | password_hash('sha512') }}"
+        shell: /bin/bash
+        update_password: on_create
