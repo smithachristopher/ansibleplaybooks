@@ -1,2 +1,4 @@
 ---
 # tasks file for role2
+- import_tasks: createuser.yml
+- import_tasks: apache.yml

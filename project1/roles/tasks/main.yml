@@ -1,2 +1,10 @@
 ---
-# tasks file for roles
+
+  - import_tasks: disable_ipv6.yml
+  - import_tasks: configure_root_password.YMLm
+  - import_tasks: upload_sshkeys.yml
+  - import_tasks: htop.yml
+  - import_tasks: epel.yml
+  - import_tasks: htop.yml
+
+        
