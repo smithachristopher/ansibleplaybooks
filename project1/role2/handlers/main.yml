@@ -1,2 +1,6 @@
 ---
 # handlers file for role2
+- name: restart apache
+  yum:
+    name: httpd
+    state: restarted

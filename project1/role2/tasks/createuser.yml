@@ -1,14 +1,10 @@
 ---
-- name: Create New Users
-  hosts: first-test-vm
-  become: true
-  remote_user: root
-  tasks:
-    - name: Create Users
-      user:
-        name: "{{ item.name }}"
-        uid: "{{ item.uid }}"
-        password: "{{ item.password | password_hash('sha512','dfrt') }}"
-        shell: /bin/bash
-        update_password: on_create
-      with_items: "{{ user_details }}"
+
+- name: Create Users
+  user:
+    name: "{{ item.name }}"
+    uid: "{{ item.uid }}"
+    password: "{{ item.password | password_hash('sha512','dfrt') }}"
+    shell: /bin/bash
+    update_password: on_create
+  with_items: "{{ user_details }}"

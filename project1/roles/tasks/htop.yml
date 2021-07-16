@@ -4,16 +4,13 @@
 # Execute sudo yum search htop command to search for htop on CentOS
 # Run sudo yum install htop to install htop in CentOS 8
 # Update sudo yum update htop to upgrade htop to the latest version in CentOS 8
-- name: install htop on centos
-  hosts: first-test-vm
-  remote_user: root 
-  tasks:
-   - name: install htop on centos
-     yum:
-       name: htop
-       state: installed
 
-   - name: enable htop
-     yum:
-       name: htop
-       state: started
+- name: install htop on centos
+  yum:
+    name: htop
+    state: installed
+
+- name: enable htop
+  yum:
+    name: htop
+    state: started

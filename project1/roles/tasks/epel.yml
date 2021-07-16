@@ -1,9 +1,6 @@
 ---
+
 - name: install epel-release
-  hosts: first-test-vm
-  remote_user: root
-  tasks:
-    - name: install epel-release
-      yum:
-        name: epel-release
-        state: present
+  yum:
+    name: epel-release
+    state: present
