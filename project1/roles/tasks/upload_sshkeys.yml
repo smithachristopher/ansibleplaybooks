@@ -1,0 +1,20 @@
+---
+
+- name: Upload ssh key to server
+  hosts: first-test-vm
+  remote_user: root
+  tasks:
+    - name: Upload ssh Key
+      authorized_key:
+        user: root
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub')}}"
+    - name: restart sshd
+      service:
+        name: sshd
+        state: restarted
+    - name: Update Root user's Password
+      user:
+        name: root
+        update_password: always
+        password: create root pw {{ root_password | default("hallo") | password_hash("sha512", "ks7d") }}

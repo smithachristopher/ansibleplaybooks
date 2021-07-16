@@ -1,0 +1,8 @@
+---
+
+- name: Setup
+  hosts: first-test-vm
+  remote_user: root
+  roles:
+    - { role: roles, message: "first" }
+    - { role: role2, message: "second" }

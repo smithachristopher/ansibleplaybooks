@@ -1,0 +1,6 @@
+---
+  
+- hosts: first_test_vm
+  remote_user: root
+  roles:
+    - roles

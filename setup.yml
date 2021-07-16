@@ -1,7 +1,7 @@
 ---
 
 - name: Setup
-  hosts: server_node1
+  hosts: first-test-vm
   remote_user: root
   tasks:
     # 1. check if 1pv6 is enabled ifconfig |grep inet6
@@ -12,15 +12,13 @@
     # 4 . check if 1pv6 is enabled ifconfig |grep inet6
       - name: Disable IPv6 with sysctl
         sysctl:
-           name: {{ item }}
-           value: 1
-           state: present
-           reload: yes
+          name: "{{ item.name }}"
+          value: 1
+          state: present
+          reload: yes
 
-        with_items:
-          - net.ipv6.conf.all.disable_ipv6
-          - net.ipv6.conf.default.disable_ipv6
-          - net.ipv6.conf.lo.disable_ipv6
+        with_items: "{{ ipv6_details }}"
+
 # 1. check updates - sudo yum check-update
 # 2. refresh package and install update - sudo yum update
 # 3. reboot system - sudo reboot
@@ -32,17 +30,16 @@
           user: root
           state: present
           key: "{{ lookup('file', '~/.ssh/id_rsa.pub')}}"
-      - name: restart sshd
-        service:
-          name: sshd
-          state: restarted
+        notify:
+          - Restart sshd
+
 
       - name: update the packages
         yum:
           state: latest
           update_cache: yes  # Force yum to check if cache is out of date and redownload if needed.
           update_only: yes   # When using latest, only update installed packages.
-          
+
 
 # Connect to the server via SSH as the root user; or open a terminal if you’re working locally.
 # Install the EPEL repository with the following command: sudo yum install epel-release
@@ -62,3 +59,9 @@
         yum:
           name: htop
           state: present
+          
+  handlers:
+    - name: restart sshd
+      service:
+        name: sshd
+        state: restarted

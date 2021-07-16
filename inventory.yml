@@ -4,6 +4,14 @@ all:
   hosts:
     first-test-vm:
       ansible_host: 192.168.30.170
+      root_password: "Cent$OS"
+      my_password: myPlaintextPassword
 
-         
-      root_password: Cent$OS
+      user_details:
+        - { name: testuser1, uid: 1002 , password: myPlaintextPassword }
+        - { name: testuser2, uid: 1003 , password: "Cent$OS" }
+
+      ipv6_details:
+        - { name: net.ipv6.conf.all.disable_ipv6 }
+        - { name: net.ipv6.conf.default.disable_ipv6 }
+        - { name: net.ipv6.conf.lo.disable_ipv6 }

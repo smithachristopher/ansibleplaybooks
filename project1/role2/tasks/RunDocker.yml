@@ -1,0 +1,26 @@
+---
+
+- name: Run Docker Image
+  hosts: localhost
+  remote_user: root
+
+  tasks:
+  - name: Create Directory
+    file:
+      path: newDocker
+      state: directory
+
+  - name: Copy Dockerfile
+    copy:
+      src: /Users/smitha/Desktop/Automation/Dockerfile
+      dest: /newDocker
+
+  - name: Build docker image
+    command:
+      chdir: /Users/smitha/Desktop/Automation/newDocker
+      cmd: docker build -t image1 .
+
+  - name: Run Docker Container
+    command:
+      chdir: /newDocker
+      cmd: docker run -itd -p 7777:80 image1

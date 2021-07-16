@@ -1,0 +1,8 @@
+---
+- hosts: all
+  remote_user: root
+  roles:
+    - role2
+  user_details:
+    - { name: testuser1, uid: 1002 , password: myPlaintextPassword }
+    - { name: testuser2, uid: 1003 , password: "Cent$OS" }
