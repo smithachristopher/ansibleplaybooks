@@ -8,11 +8,6 @@
     state: "{{ item.state | default('present') }}"
   with_items: "{{ ssh_users_admins.authorized_keys }}"
 
-- name: restart sshd
-  service:
-    name: sshd
-    state: restarted
-
 - name: Update Root user's Password
   user:
     name: root
